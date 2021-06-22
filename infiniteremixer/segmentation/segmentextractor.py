@@ -31,7 +31,7 @@ class SegmentExtractor:
                 self._create_and_save_segments_for_file(audio_folder, dir, audios_save_dir)
         # Save tempo
         self._create_save_path("", data_save_dir)
-        dataset_path = self._save_data(data_save_dir, self._tempo, "dataset")
+        dataset_path = self._save_data(data_save_dir, self._tempo, "tempo")
         print(f"Saved dataset to {dataset_path}")
 
 

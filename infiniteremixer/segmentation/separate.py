@@ -1,9 +1,9 @@
 import argparse
 
-from infiniteremixer.segmentation.segmentextractor import SegmentExtractor
+from infiniteremixer.segmentation.separator import SeparatorChunks
 
 
-def segment():
+def separate():
     """The "segment" entry point can be run to divide a group of songs in a
     directory into its beats and to save the relative segments as audio
     files in another directory.
@@ -24,5 +24,7 @@ def segment():
                         default=22050)
 
     args = parser.parse_args()
-    segment_extractor = SegmentExtractor(args.sample_rate)
-    segment_extractor.create_and_save_segments(args.dir, args.save_dir)
+    #
+    max_size = 6_000_000
+    separator = SeparatorChunks(args.sample_rate, max_size)
+    separator.create_and_save_sources(args.dir, args.save_dir)
