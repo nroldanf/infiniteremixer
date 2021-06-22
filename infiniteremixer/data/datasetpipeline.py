@@ -30,11 +30,23 @@ class DatasetPipeline:
             dataset
         """
         tracks_features = self.batch_extractor.extract(dir)
+        print(tracks_features)
+        print(type(tracks_features))
         print("Extracted features")
+
+        print()
+
         tracks_aggregations = self.multi_track_batch_aggregator.aggregate(tracks_features)
+        print(tracks_aggregations)
+        print(type(tracks_aggregations))
         print("Performed statistical aggregation of features")
+
+        print()
+
         tracks_merged_features = self.feature_merger.merge(tracks_aggregations)
+        print(tracks_merged_features) # dict (key: np.array 1 x n_features)
         print("Merged multiple features")
+
         mapping, dataset = self.data_preparer.prepare_mapping_and_dataset(tracks_merged_features)
         print("Prepared mapping and dataset")
         mapping_path = self._save_data(save_dir, mapping, "mapping")
