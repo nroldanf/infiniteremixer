@@ -1,10 +1,9 @@
 import pickle
-
 import librosa
 import soundfile as sf
 
 
-def load(path, sr):
+def load(path, sr, mono=True):
     """Load an audio file as a floating point time series.
 
     :param path: (str) Path to the input file
@@ -12,7 +11,7 @@ def load(path, sr):
 
     :return (np.ndarray) Audio signal
     """
-    return librosa.load(path, sr=sr)[0]
+    return librosa.load(path, sr=sr, mono=mono)[0]
 
 
 def save_to_pickle(save_path, data):

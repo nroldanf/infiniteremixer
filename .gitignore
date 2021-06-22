@@ -7,6 +7,17 @@ __pycache__/
 
 .pytest_cache
 
+
+# Music
+*mp3
+*wav
+
+# Spleeter Models
+*pretrained_models*
+
+# MacOS
+*.DS_Store
+
 # C extensions
 *.so
 

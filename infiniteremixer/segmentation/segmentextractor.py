@@ -1,7 +1,7 @@
 import os
 
 from infiniteremixer.utils.io import load, write_wav
-from infiniteremixer.segmentation.beattracker import estimate_beats
+from infiniteremixer.segmentation.beattracker import estimate_beats_and_tempo
 from infiniteremixer.segmentation.trackcutter import cut
 
 
@@ -13,6 +13,7 @@ class SegmentExtractor:
     def __init__(self, sample_rate):
         self.sample_rate = sample_rate
         self._audio_format = "wav"
+        self._tempo = []
 
     def create_and_save_segments(self, dir, save_dir):
         """Performs the following steps for each audio file in a
@@ -27,13 +28,20 @@ class SegmentExtractor:
         """
         for root, _, files in os.walk(dir):
             for file in files:
+                print(file)
                 self._create_and_save_segments_for_file(file, dir, save_dir)
 
     def _create_and_save_segments_for_file(self, file, root, save_dir):
         file_path = os.path.join(root, file)
+        # Load both sources
         signal = load(file_path, self.sample_rate)
-        beat_events = estimate_beats(signal, self.sample_rate)
+
+        # Estimate tempo from drums sources
+        beat_events, tempo = estimate_beats_and_tempo(signal, self.sample_rate)
+        # Segment both based on beat events of drums source
         segments = cut(signal, beat_events)
+
+
         self._write_segments_to_wav(file, save_dir, segments)
         print(f"Beats saved for {file_path}")
 
@@ -48,3 +56,7 @@ class SegmentExtractor:
         return save_path
 
 
+if __name__ == '__main__':
+    dir = "/app/splitted/"
+    for root, _, folders in os.walk(dir):
+        print(folders)
