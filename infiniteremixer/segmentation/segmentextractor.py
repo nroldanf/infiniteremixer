@@ -1,6 +1,5 @@
 import os
-
-from infiniteremixer.utils.io import load, write_wav
+from infiniteremixer.utils.io import load, write_wav, save_to_pickle
 from infiniteremixer.segmentation.beattracker import estimate_beats_and_tempo
 from infiniteremixer.segmentation.trackcutter import cut
 
@@ -13,9 +12,9 @@ class SegmentExtractor:
     def __init__(self, sample_rate):
         self.sample_rate = sample_rate
         self._audio_format = "wav"
-        self._tempo = []
+        self._tempo = {}
 
-    def create_and_save_segments(self, dir, save_dir):
+    def create_and_save_segments(self, dir, audios_save_dir, data_save_dir):
         """Performs the following steps for each audio file in a
         directory:
             1- load audio file
@@ -26,24 +25,39 @@ class SegmentExtractor:
         :param dir: (str) Directory containing audio files to be preprocessed
         :param save_dir: (str) Directory where to save segments
         """
-        for root, _, files in os.walk(dir):
-            for file in files:
-                print(file)
-                self._create_and_save_segments_for_file(file, dir, save_dir)
+        for root, dirs, _ in os.walk(dir):
+            for dir in dirs:
+                audio_folder = os.path.join(root, dir)
+                self._create_and_save_segments_for_file(audio_folder, dir, audios_save_dir)
+        # Save tempo
+        self._create_save_path("", data_save_dir)
+        dataset_path = self._save_data(data_save_dir, self._tempo, "dataset")
+        print(f"Saved dataset to {dataset_path}")
 
-    def _create_and_save_segments_for_file(self, file, root, save_dir):
-        file_path = os.path.join(root, file)
+
+    def _create_and_save_segments_for_file(self, folder, root, save_dir):
+        file_names = os.listdir(folder)
+        base_filename = file_names[0][:-10]
+        file_paths = [os.path.join(folder, file_name) for file_name in os.listdir(folder)]
         # Load both sources
-        signal = load(file_path, self.sample_rate)
-
+        signal_drums = load(file_paths[0], self.sample_rate)
+        signal_other = load(file_paths[1], self.sample_rate)
         # Estimate tempo from drums sources
-        beat_events, tempo = estimate_beats_and_tempo(signal, self.sample_rate)
-        # Segment both based on beat events of drums source
-        segments = cut(signal, beat_events)
+        beat_events, tempo = estimate_beats_and_tempo(signal_drums, self.sample_rate)
+        self._tempo[base_filename] = tempo
+        # # Segment both based on beat events of drums source
+        segments_drums = cut(signal_drums, beat_events)
+        segments_other = cut(signal_other, beat_events)
+        # Create folder for each source (drums and other)
+        drums_path = self._create_save_path("drums", save_dir)
+        other_path = self._create_save_path("other", save_dir)
 
 
-        self._write_segments_to_wav(file, save_dir, segments)
-        print(f"Beats saved for {file_path}")
+        # Save the beats in different folders
+        self._write_segments_to_wav(file_names[0], drums_path, segments_drums)
+        self._write_segments_to_wav(file_names[1], other_path, segments_other)
+        # Save the tempo file
+
 
     def _write_segments_to_wav(self, file, save_dir, segments):
         for i, segment in enumerate(segments):
@@ -55,8 +69,23 @@ class SegmentExtractor:
         save_path = os.path.join(save_dir, file_name)
         return save_path
 
+    def _create_save_path(self, file, save_dir):
+        folder_path = os.path.join(save_dir, file)
+        try:
+            os.mkdir(folder_path)
+        except OSError:
+            print(f"{folder_path} already exists.")
+        return folder_path
+
+    def _save_data(self, save_dir, data, data_type):
+        save_path = os.path.join(save_dir, f"{data_type}.pkl")
+        save_to_pickle(save_path, data)
+        return save_path
+
 
 if __name__ == '__main__':
-    dir = "/app/splitted/"
-    for root, _, folders in os.walk(dir):
-        print(folders)
+    dir = "/app/results/splitted"
+    save_dir = "/app/results/segmented"
+    sr = 22050
+    segment_extractor = SegmentExtractor(sr)
+    segment_extractor.create_and_save_segments(dir, save_dir, "/app/results/dataset")
