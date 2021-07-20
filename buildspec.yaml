@@ -28,5 +28,4 @@ phases:
       - echo "Pushing to repo uri $REPOSITORY_URI"
       - docker push $IMAGE_URI:latest
       - docker push $IMAGE_URI:$IMAGE_TAG
-      - printf '[{"name":"%s","imageUri":"%s"}]' "$CONTAINER_TO_RELEASE_NAME" "$IMAGE_URI" > imagedefinitions.json
       - echo "--------BUILD DONE.--------"
