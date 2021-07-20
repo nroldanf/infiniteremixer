@@ -1,5 +1,5 @@
-import pytest
 import numpy as np
+import pytest
 
 from infiniteremixer.remix.featureretriever import FeatureRetriever
 
@@ -7,16 +7,8 @@ from infiniteremixer.remix.featureretriever import FeatureRetriever
 @pytest.fixture
 def feature_retriever():
     feature_retriever = FeatureRetriever()
-    feature_retriever.mapping = [
-        "beat1",
-        "beat2",
-        "beat3"
-    ]
-    feature_retriever.features = np.array([
-        [1, 2],
-        [2, 3],
-        [3, 4]
-    ])
+    feature_retriever.mapping = ["beat1", "beat2", "beat3"]
+    feature_retriever.features = np.array([[1, 2], [2, 3], [3, 4]])
     return feature_retriever
 
 

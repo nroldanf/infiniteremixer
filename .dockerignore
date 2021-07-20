@@ -1,0 +1,8 @@
+.direnv
+.venv
+venv
+*.egg-info
+*/.mypy_cache
+*/__pycache__
+results/
+pretrained_models/

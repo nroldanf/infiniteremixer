@@ -1,5 +1,5 @@
-import pytest
 import numpy as np
+import pytest
 
 from infiniteremixer.data.aggregation.flatbatchaggregator import FlatBatchAggregator
 from infiniteremixer.data.aggregation.meanaggregator import MeanAggregator
@@ -23,10 +23,7 @@ def test_flat_batch_aggregator_is_instantiated(flat_batch_aggregator):
 
 
 def test_array_is_aggregated(flat_batch_aggregator):
-    array = np.array([
-        [1, 2],
-        [3, 4]
-    ])
+    array = np.array([[1, 2], [3, 4]])
     aggregations = flat_batch_aggregator.aggregate(array)
-    expected_aggregations = np.array([1.5, 3.5, .5, .5])
+    expected_aggregations = np.array([1.5, 3.5, 0.5, 0.5])
     assert np.array_equal(aggregations, expected_aggregations)

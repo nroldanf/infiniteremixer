@@ -21,7 +21,7 @@ class Beat:
         number_and_format = file_path.split("_")[-1]
         format = file_path.split(".")[-1]
         new_number_and_format = f"{number}.{format}"
-        path_head = file_path[:-len(number_and_format)]
+        path_head = file_path[: -len(number_and_format)]
         new_file_path = path_head + new_number_and_format
         return new_file_path
 

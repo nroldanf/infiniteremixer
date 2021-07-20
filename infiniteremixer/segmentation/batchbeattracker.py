@@ -50,11 +50,8 @@ class BatchBeatTracker:
     def _reset_track_estimates(self):
         self._track_estimates = {}
 
-    def _prepare_estimate_dict(self,beats, tempo):
-        estimate = {
-            "beats": beats,
-            "tempo": tempo
-        }
+    def _prepare_estimate_dict(self, beats, tempo):
+        estimate = {"beats": beats, "tempo": tempo}
         return estimate
 
 
@@ -62,4 +59,3 @@ if __name__ == "__main__":
     bbt = BatchBeatTracker()
     estimates = bbt.estimate("/home/valerio/datasets/infiniteremixer/songs")
     a = 1
-

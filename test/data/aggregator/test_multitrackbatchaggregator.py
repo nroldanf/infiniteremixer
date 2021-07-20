@@ -1,9 +1,13 @@
-import pytest
 import numpy as np
+import pytest
 
-from infiniteremixer.data.aggregation.multitrackbatchaggregator import MultiTrackBatchAggregator
-from infiniteremixer.data.aggregation.hierarchicalbatchaggregator import HierarchicalBatchAggregator
+from infiniteremixer.data.aggregation.hierarchicalbatchaggregator import (
+    HierarchicalBatchAggregator,
+)
 from infiniteremixer.data.aggregation.meanaggregator import MeanAggregator
+from infiniteremixer.data.aggregation.multitrackbatchaggregator import (
+    MultiTrackBatchAggregator,
+)
 from infiniteremixer.data.aggregation.stdevaggregator import StdDeviationAggregator
 
 
@@ -28,11 +32,11 @@ def test_mtba_generate_tracks_aggregations(mtba):
     tracks_features = {
         "filepath1": {
             "chromogram": np.array([[1, 3], [2, 6]]),
-            "mfcc": np.array([[2, 4], [1, 2]])
+            "mfcc": np.array([[2, 4], [1, 2]]),
         },
         "filepath2": {
             "chromogram": np.array([[1, 3], [2, 6]]),
-            "mfcc": np.array([[2, 4], [1, 2]])
+            "mfcc": np.array([[2, 4], [1, 2]]),
         },
     }
 
@@ -46,7 +50,7 @@ def test_mtba_generate_tracks_aggregations(mtba):
             },
             "mfcc": {
                 "mean": np.array([1.5, 3]),
-                "std_deviation": np.array([.5, 1]),
+                "std_deviation": np.array([0.5, 1]),
             },
         },
         "filepath2": {
@@ -56,16 +60,24 @@ def test_mtba_generate_tracks_aggregations(mtba):
             },
             "mfcc": {
                 "mean": np.array([1.5, 3]),
-                "std_deviation": np.array([.5, 1]),
+                "std_deviation": np.array([0.5, 1]),
             },
-        }
+        },
     }
     assert len(aggregations) == len(expected_aggregations)
-    assert np.array_equal(aggregations["filepath1"]["chromogram"]["mean"],
-                          expected_aggregations["filepath1"]["chromogram"]["mean"])
-    assert np.array_equal(aggregations["filepath1"]["chromogram"]["std_deviation"],
-                          expected_aggregations["filepath1"]["chromogram"]["std_deviation"])
-    assert np.array_equal(aggregations["filepath1"]["mfcc"]["mean"],
-                          expected_aggregations["filepath1"]["mfcc"]["mean"])
-    assert np.array_equal(aggregations["filepath1"]["mfcc"]["std_deviation"],
-                          expected_aggregations["filepath1"]["mfcc"]["std_deviation"])
+    assert np.array_equal(
+        aggregations["filepath1"]["chromogram"]["mean"],
+        expected_aggregations["filepath1"]["chromogram"]["mean"],
+    )
+    assert np.array_equal(
+        aggregations["filepath1"]["chromogram"]["std_deviation"],
+        expected_aggregations["filepath1"]["chromogram"]["std_deviation"],
+    )
+    assert np.array_equal(
+        aggregations["filepath1"]["mfcc"]["mean"],
+        expected_aggregations["filepath1"]["mfcc"]["mean"],
+    )
+    assert np.array_equal(
+        aggregations["filepath1"]["mfcc"]["std_deviation"],
+        expected_aggregations["filepath1"]["mfcc"]["std_deviation"],
+    )

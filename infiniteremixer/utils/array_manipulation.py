@@ -1,7 +1,9 @@
+from typing import List
+
 import numpy as np
 
 
-def concatenate_arrays(arrays):
+def concatenate_arrays(arrays: List[np.ndarray]) -> np.ndarray:
     """Concatenate list of arrays.
 
     :param arrays (list of np.ndarray)

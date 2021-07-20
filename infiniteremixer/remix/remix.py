@@ -16,7 +16,7 @@ class Remix(Sequence):
     @property
     def last_beat(self):
         num_beats_in_remix = len(self._beats)
-        return self._beats[num_beats_in_remix-1]
+        return self._beats[num_beats_in_remix - 1]
 
     @property
     def num_beats_with_last_track(self):

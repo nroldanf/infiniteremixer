@@ -1,3 +1,7 @@
+from typing import Dict
+
+import numpy as np
+
 from infiniteremixer.utils.array_manipulation import concatenate_arrays
 
 
@@ -5,7 +9,10 @@ class FeatureMerger:
     """FeatureMerger is responsible for merging different features which
     characterise a track.
     """
-    def merge(self, tracks_features):
+
+    def merge(
+        self, tracks_features: Dict[str, Dict[str, np.ndarray]]
+    ) -> Dict[str, np.ndarray]:
         """Merge all features for a list of tracks.
 
         :param tracks_features: (dict) Tracks with corresponding features:
@@ -33,7 +40,9 @@ class FeatureMerger:
             merged_features[track_path] = track_merged_features
         return merged_features
 
-    def _merge_features_for_track(self, track_features):
+    def _merge_features_for_track(
+        self, track_features: Dict[str, np.ndarray]
+    ) -> np.ndarray:
         features = [feature for feature in track_features.values()]
         merged_features = concatenate_arrays(features)
         return merged_features
@@ -41,16 +50,11 @@ class FeatureMerger:
 
 if __name__ == "__main__":
     import numpy as np
+
     feature_merger = FeatureMerger()
     tracks_features = {
-        "track1": {
-            "mfcc": np.array([1, 2, 3]),
-            "chromogram": np.array([4, 5, 6, 7])
-        },
-        "track2": {
-            "mfcc": np.array([1, 2, 4]),
-            "chromogram": np.array([7, 5, 6, 7])
-        }
+        "track1": {"mfcc": np.array([1, 2, 3]), "chromogram": np.array([4, 5, 6, 7])},
+        "track2": {"mfcc": np.array([1, 2, 4]), "chromogram": np.array([7, 5, 6, 7])},
     }
     merged_features = feature_merger.merge(tracks_features)
-    a =1
+    a = 1

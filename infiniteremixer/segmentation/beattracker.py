@@ -9,7 +9,7 @@ def estimate_beats(signal, sr):
 
     :return: (np.ndarray) Estimated beat events measured in samples
     """
-    beats =  librosa.beat.beat_track(signal, sr, units="samples")[1]
+    beats = librosa.beat.beat_track(signal, sr, units="samples")[1]
     return beats
 
 

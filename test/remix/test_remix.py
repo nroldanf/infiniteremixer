@@ -1,7 +1,7 @@
 import pytest
 
-from infiniteremixer.remix.remix import Remix
 from infiniteremixer.remix.beat import Beat
+from infiniteremixer.remix.remix import Remix
 
 
 @pytest.fixture
@@ -37,13 +37,5 @@ def test_num_beats_with_last_track_is_returned_correctly(remix):
 
 def test_file_paths_for_remix_are_retrurned(remix):
     file_paths = remix.file_paths
-    expected_file_paths = [
-        "path1", "path2",
-        "path3", "path4"
-    ]
+    expected_file_paths = ["path1", "path2", "path3", "path4"]
     assert file_paths == expected_file_paths
-
-
-
-
-

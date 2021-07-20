@@ -1,9 +1,12 @@
 import pickle
+from typing import Any
+
 import librosa
+import numpy as np
 import soundfile as sf
 
 
-def load(path, sr, mono=True):
+def load(path: str, sr: int, mono: bool = True) -> np.ndarray:
     """Load an audio file as a floating point time series.
 
     :param path: (str) Path to the input file
@@ -14,7 +17,7 @@ def load(path, sr, mono=True):
     return librosa.load(path, sr=sr, mono=mono)[0]
 
 
-def save_to_pickle(save_path, data):
+def save_to_pickle(save_path: str, data: Any) -> None:
     """Serialize data to pickle file.
 
     :param save_path: (str) Path where to store data
@@ -24,7 +27,7 @@ def save_to_pickle(save_path, data):
         pickle.dump(data, file)
 
 
-def load_from_pickle(load_path):
+def load_from_pickle(load_path: str) -> Any:
     """Deserialize data from pickle file.
 
     :param load_path: (str) Path of file to load
@@ -36,7 +39,7 @@ def load_from_pickle(load_path):
     return data
 
 
-def write_wav(path, signal, sr):
+def write_wav(path: str, signal: np.ndarray, sr: int) -> None:
     """Write a time series to wav.
 
     :param path: (str) Path of file to be saved
@@ -44,6 +47,3 @@ def write_wav(path, signal, sr):
     :param sr: (int) Sample rate
     """
     sf.write(path, signal, sr, subtype="PCM_24")
-
-
-

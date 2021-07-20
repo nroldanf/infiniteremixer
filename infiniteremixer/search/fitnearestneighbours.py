@@ -15,11 +15,10 @@ def fit_nearest_neighbours():
     """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("dataset_path",
-                        help="path to dataset file")
-    parser.add_argument("save_path",
-                        help="path where to save trained nearest neighbour "
-                             "model")
+    parser.add_argument("dataset_path", help="path to dataset file")
+    parser.add_argument(
+        "save_path", help="path where to save trained nearest neighbour " "model"
+    )
     args = parser.parse_args()
 
     dataset = load_from_pickle(args.dataset_path)

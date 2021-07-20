@@ -1,7 +1,7 @@
 import pytest
 
-from infiniteremixer.remix.beatselector import BeatSelector
 from infiniteremixer.remix.beat import Beat
+from infiniteremixer.remix.beatselector import BeatSelector
 
 
 @pytest.fixture
@@ -10,7 +10,7 @@ def beat_selector():
     beat_selector.beat_file_paths = [
         "dir/track_name1_1.wav",
         "dir/track_name1_2.wav",
-        "dir/track_name2_1.wav"
+        "dir/track_name2_1.wav",
     ]
     return beat_selector
 
@@ -41,8 +41,5 @@ def test_check_is_beat_jump(beat_selector):
 def test_next_beat_in_track_is_chosen(beat_selector):
     beat = Beat.from_file_path("dir/track_name1_1.wav")
     expected_beat = Beat.from_file_path("dir/track_name1_2.wav")
-    next_beat = beat_selector._get_next_beat_in_track_if_possible_or_random(
-        beat)
+    next_beat = beat_selector._get_next_beat_in_track_if_possible_or_random(beat)
     assert next_beat == expected_beat
-
-

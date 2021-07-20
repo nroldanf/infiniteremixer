@@ -1,13 +1,13 @@
-import pickle
 import os
+import pickle
 
-import pytest
 import numpy as np
+import pytest
 
 from infiniteremixer.search.nnsearch import NNSearch
 
-
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
+
 
 @pytest.fixture
 def nn_selector():

@@ -1,5 +1,6 @@
 import pickle
 
+
 def load_from_pickle(load_path):
     """Deserialize data from pickle file.
 
@@ -11,10 +12,14 @@ def load_from_pickle(load_path):
         data = pickle.load(file)
     return data
 
-if __name__ == "__main__":
-    dataset = load_from_pickle("/app/results/dataset/dataset.pkl")
-    mapping = load_from_pickle("/app/results/dataset/mapping.pkl")
-    print(dataset)
-    print(dataset.shape)
 
-    print(mapping)
+if __name__ == "__main__":
+    # dataset = load_from_pickle("/app/results/dataset/dataset.pkl")
+    # mapping = load_from_pickle("/app/results/dataset/mapping.pkl")
+    tempo = load_from_pickle("/app/results/dataset/tempo.pkl")
+    print(tempo)
+
+    # print(dataset)
+    # print(dataset.shape)
+
+    # print(mapping)

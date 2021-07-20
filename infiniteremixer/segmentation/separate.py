@@ -13,15 +13,18 @@ def separate():
     $ segment path/to/dir/with/files path/to/save/dir/for/beats -r 44100
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("dir",
-                        help="directory with audio files to segment into "
-                            "beats")
-    parser.add_argument("save_dir",
-                        help="directory where to save generated audio files "
-                            "for beats")
-    parser.add_argument("-r", "--sample_rate",
-                        help="sample rate for processing audio files",
-                        default=22050)
+    parser.add_argument(
+        "dir", help="directory with audio files to segment into " "beats"
+    )
+    parser.add_argument(
+        "save_dir", help="directory where to save generated audio files " "for beats"
+    )
+    parser.add_argument(
+        "-r",
+        "--sample_rate",
+        help="sample rate for processing audio files",
+        default=22050,
+    )
 
     args = parser.parse_args()
     #

@@ -1,5 +1,5 @@
-import pytest
 import numpy as np
+import pytest
 
 from infiniteremixer.data.datapreparer import DataPreparer
 
@@ -20,9 +20,6 @@ def test_mapping_and_dataset_are_returned(data_preparer):
         "track2": np.array([3, 4, 5]),
     }
     mapping, dataset = data_preparer.prepare_mapping_and_dataset(features)
-    expected_dataset = np.array([
-        [1, 2, 3],
-        [3, 4, 5]
-    ])
+    expected_dataset = np.array([[1, 2, 3], [3, 4, 5]])
     assert mapping == ["track1", "track2"]
     assert np.array_equal(dataset, expected_dataset)

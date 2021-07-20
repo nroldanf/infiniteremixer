@@ -1,4 +1,8 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
+
+import numpy as np
+
+from infiniteremixer.data.aggregation.aggregator import Aggregator
 
 
 class BatchAggregator(ABC):
@@ -6,10 +10,10 @@ class BatchAggregator(ABC):
     to apply multiple statistical aggregation on 2d numpy arrays.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.aggregators = []
 
-    def add_aggregator(self, aggregator):
+    def add_aggregator(self, aggregator: Aggregator) -> None:
         """Add an aggregator function to the aggregators.
 
         :param aggregator: (Aggregator) Concrete Aggregator
@@ -17,5 +21,5 @@ class BatchAggregator(ABC):
         self.aggregators.append(aggregator)
 
     @abstractmethod
-    def aggregate(self, array):
+    def aggregate(self, array: np.ndarray) -> np.ndarray:
         pass

@@ -1,7 +1,8 @@
 import os
-from infiniteremixer.utils.io import load, write_wav, save_to_pickle
+
 from infiniteremixer.segmentation.beattracker import estimate_beats_and_tempo
 from infiniteremixer.segmentation.trackcutter import cut
+from infiniteremixer.utils.io import load, save_to_pickle, write_wav
 
 
 class SegmentExtractor:
@@ -28,36 +29,39 @@ class SegmentExtractor:
         for root, dirs, _ in os.walk(dir):
             for dir in dirs:
                 audio_folder = os.path.join(root, dir)
-                self._create_and_save_segments_for_file(audio_folder, dir, audios_save_dir)
+                self._create_and_save_segments_for_file(
+                    audio_folder, dir, audios_save_dir
+                )
         # Save tempo
         self._create_save_path("", data_save_dir)
         dataset_path = self._save_data(data_save_dir, self._tempo, "tempo")
         print(f"Saved dataset to {dataset_path}")
 
-
     def _create_and_save_segments_for_file(self, folder, root, save_dir):
         file_names = os.listdir(folder)
-        base_filename = file_names[0][:-10]
-        file_paths = [os.path.join(folder, file_name) for file_name in os.listdir(folder)]
+        file_paths = [
+            os.path.join(folder, file_name) for file_name in os.listdir(folder)
+        ]
         # Load both sources
         signal_drums = load(file_paths[0], self.sample_rate)
         signal_other = load(file_paths[1], self.sample_rate)
         # Estimate tempo from drums sources
         beat_events, tempo = estimate_beats_and_tempo(signal_drums, self.sample_rate)
-        self._tempo[base_filename] = tempo
+        tempo_key = file_names[1].split("/")[-1]
+        print()
+        print("tempo key: ", tempo_key)
+        print()
+        self._tempo[tempo_key] = tempo
         # # Segment both based on beat events of drums source
         segments_drums = cut(signal_drums, beat_events)
         segments_other = cut(signal_other, beat_events)
         # Create folder for each source (drums and other)
         drums_path = self._create_save_path("drums", save_dir)
         other_path = self._create_save_path("other", save_dir)
-
-
         # Save the beats in different folders
         self._write_segments_to_wav(file_names[0], drums_path, segments_drums)
         self._write_segments_to_wav(file_names[1], other_path, segments_other)
         # Save the tempo file
-
 
     def _write_segments_to_wav(self, file, save_dir, segments):
         for i, segment in enumerate(segments):
@@ -83,7 +87,7 @@ class SegmentExtractor:
         return save_path
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     dir = "/app/results/splitted"
     save_dir = "/app/results/segmented"
     sr = 22050

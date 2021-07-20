@@ -1,3 +1,5 @@
+import numpy as np
+
 from infiniteremixer.data.aggregation.batchaggragator import BatchAggregator
 from infiniteremixer.utils.array_manipulation import concatenate_arrays
 
@@ -8,7 +10,7 @@ class FlatBatchAggregator(BatchAggregator):
     array.
     """
 
-    def aggregate(self, array):
+    def aggregate(self, array: np.ndarray) -> np.ndarray:
         """Perform statistical aggregations on 2d array and merge
         aggregations.
 

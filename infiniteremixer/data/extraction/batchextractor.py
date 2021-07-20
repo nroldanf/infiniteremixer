@@ -1,24 +1,28 @@
 import os
+from typing import Dict
 
+import numpy as np
+
+from infiniteremixer.data.extraction.extractor import Extractor
 from infiniteremixer.utils.io import load
 
 
 class BatchExtractor:
     """Batch extract features dynamically from a list of audio files."""
 
-    def __init__(self, sample_rate=22050):
+    def __init__(self, sample_rate: int = 22050) -> None:
         self.sample_rate = sample_rate
         self.extractors = []
         self._features = {}
 
-    def add_extractor(self, extractor):
+    def add_extractor(self, extractor: Extractor) -> None:
         """Add a concrete Extractor to the extractors.
 
         :param extractor: (Extractor) Concrete Extractor (e.g., MFCCExtractor)
         """
         self.extractors.append(extractor)
 
-    def extract(self, dir):
+    def extract(self, dir: str) -> Dict[str, Dict[str, np.ndarray]]:
         """Extract features from all the audio files in the directory.
 
         :param dir: (str) Path to directory with audio files to analyse
@@ -45,7 +49,7 @@ class BatchExtractor:
                 features[file_path] = file_features
         return features
 
-    def _extract_features_for_file(self, file_path):
+    def _extract_features_for_file(self, file_path: str) -> Dict[str, np.ndarray]:
         features = {}
         signal = load(file_path, self.sample_rate)
         for extractor in self.extractors:
@@ -55,8 +59,8 @@ class BatchExtractor:
 
 
 if __name__ == "__main__":
-    from infiniteremixer.data.extraction.mfccextractor import MFCCExtractor
     from infiniteremixer.data.extraction.chromogramextractor import ChromogramExtractor
+    from infiniteremixer.data.extraction.mfccextractor import MFCCExtractor
 
     num_mfccs = 13
     frame_size = 1024
@@ -73,5 +77,3 @@ if __name__ == "__main__":
 
     features = batch_extractor.extract(dir)
     a = 1
-
-

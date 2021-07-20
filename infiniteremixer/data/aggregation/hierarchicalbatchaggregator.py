@@ -1,3 +1,7 @@
+from typing import Dict
+
+import numpy as np
+
 from infiniteremixer.data.aggregation.batchaggragator import BatchAggregator
 
 
@@ -7,7 +11,7 @@ class HierarchicalBatchAggregator(BatchAggregator):
     each.
     """
 
-    def aggregate(self, array):
+    def aggregate(self, array: np.ndarray) -> Dict[str, np.ndarray]:
         """Perform statistical aggregations on 2d array.
 
         :param array: (2d numpy array)

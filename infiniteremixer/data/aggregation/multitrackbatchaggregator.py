@@ -1,12 +1,19 @@
+from typing import Dict
+
+import numpy as np
+
+
 class MultiTrackBatchAggregator:
     """MultiTrackBatchAggregator aggregates features which characterise a
     set of tracks.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.batch_aggregator = None
 
-    def aggregate(self, tracks_features):
+    def aggregate(
+        self, tracks_features: Dict[str, Dict[str, np.ndarray]]
+    ) -> Dict[str, Dict[str, Dict[str, np.ndarray]]]:
         """Substitute features for each track with respective aggregations.
 
         :param tracks_features: (dict) Tracks with corresponding features:

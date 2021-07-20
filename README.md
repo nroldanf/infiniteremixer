@@ -27,8 +27,9 @@ The package is divided into 4 sub-packages:
 - search
 - remix
 
-*segmentation* is responsible to segment groups of songs into beats and 
-store the beats as separate wav files.
+*segmentation* is responsible to separate in different sources (drums and others)
+and segment both into beats and store the beats as separate wav files in different
+folders.
 
 *data* can be used to batch extract audio features from a directory containing 
 audio files, aggregate the features, and storing the data ready to be 
@@ -48,14 +49,17 @@ generate a remix, which will leverage the preprocessed data.
 ### Preprocessing
 To preprocess data follow these steps:
 
-1- Segment a group of tracks into beats
-2- Extract features and prepare data from the beats
-3- Fit a Nearest Neighbour object
+1- Separate a group of tracks into 2 different sources (drums and other).
+2- Segment a group of tracks into beats
+3- Extract features and prepare data from the beats
+4- Fit a Nearest Neighbour object
 
 To run the steps above, use the entry points below. You can find more info 
 on the entry points, in the respective modules.
 
-`$ segment path/to/dir/with/files path/to/save/dir/for/beats`
+`$ separate path/to/dir/with/files path/to/save/dir/for/splitted`
+
+`$ segment path/to/save/dir/for/splitted path/to/save/dir/for/beats`
 
 `$ create_dataset path/to/dir/with/audio/files save/dir`
 

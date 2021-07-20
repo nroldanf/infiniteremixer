@@ -3,14 +3,16 @@ import pickle
 
 import pytest
 
+from infiniteremixer.data.aggregation.flatbatchaggregator import FlatBatchAggregator
+from infiniteremixer.data.aggregation.meanaggregator import MeanAggregator
+from infiniteremixer.data.aggregation.multitrackbatchaggregator import (
+    MultiTrackBatchAggregator,
+)
+from infiniteremixer.data.datapreparer import DataPreparer
 from infiniteremixer.data.datasetpipeline import DatasetPipeline
 from infiniteremixer.data.extraction.batchextractor import BatchExtractor
 from infiniteremixer.data.extraction.chromogramextractor import ChromogramExtractor
-from infiniteremixer.data.aggregation.flatbatchaggregator import FlatBatchAggregator
-from infiniteremixer.data.aggregation.meanaggregator import MeanAggregator
-from infiniteremixer.data.aggregation.multitrackbatchaggregator import MultiTrackBatchAggregator
 from infiniteremixer.data.featuremerger import FeatureMerger
-from infiniteremixer.data.datapreparer import DataPreparer
 
 
 @pytest.fixture
@@ -54,11 +56,11 @@ def test_dataset_and_mapping_are_generated(dataset_pipeline):
         "/home/valerio/datasets/infiniteremixer/test/dummy_beats/pink floyd - another "
         "brick in the wall.mp3_2.wav",
         "/home/valerio/datasets/infiniteremixer/test/dummy_beats/pink floyd - another "
-        'brick in the wall.mp3_1.wav',
+        "brick in the wall.mp3_1.wav",
         "/home/valerio/datasets/infiniteremixer/test/dummy_beats/pink floyd - another "
         "brick in the wall.mp3_3.wav",
         "/home/valerio/datasets/infiniteremixer/test/dummy_beats/pink floyd - another "
-        "brick in the wall.mp3_0.wav"
+        "brick in the wall.mp3_0.wav",
     ]
     assert mapping == expected_mapping
 
@@ -69,4 +71,3 @@ def test_dataset_and_mapping_are_generated(dataset_pipeline):
 
     os.remove(mapping_file)
     os.remove(dataset_file)
-

@@ -24,13 +24,8 @@ setuptools.setup(
             "segment = infiniteremixer.segmentation.segment:segment",
             "create_dataset = infiniteremixer.data.createdataset:create_dataset",
             "fit_nearest_neighbours = infiniteremixer.search.fitnearestneighbours:fit_nearest_neighbours",
-            "generate_remix = infiniteremixer.remix.generateremix:generate_remix"
+            "generate_remix = infiniteremixer.remix.generateremix:generate_remix",
         ]
     },
-    extras_require={
-        "test": [
-            "pytest",
-            "pytest-mock"
-        ]
-    }
+    extras_require={"test": ["pytest", "pytest-mock"]},
 )

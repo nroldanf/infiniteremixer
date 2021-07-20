@@ -21,8 +21,9 @@ class NNSearch:
         :return: (np.ndarray) Distances associated to neighbours
         """
         sample = sample[np.newaxis, ...]
-        distances, array_indexes = self.model.kneighbors(sample,
-                                                         n_neighbors=num_neighbours)
+        distances, array_indexes = self.model.kneighbors(
+            sample, n_neighbors=num_neighbours
+        )
         paths = self._from_indexes_to_paths(array_indexes[0])
         return paths, distances[0]
 

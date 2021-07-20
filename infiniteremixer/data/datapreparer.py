@@ -1,3 +1,5 @@
+from typing import List, Tuple
+
 import numpy as np
 
 
@@ -6,10 +8,12 @@ class DataPreparer:
     by KNN, and a mapping of dataset indexes / file paths, that will be
     necessary for retrieval."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def prepare_mapping_and_dataset(self, features):
+    def prepare_mapping_and_dataset(
+        self, features: dict
+    ) -> Tuple[List[str], np.ndarray]:
         """Create mapping and dataset from tracks with relative features.
 
         :param features: (dict) Tracks with features:
@@ -26,10 +30,10 @@ class DataPreparer:
         dataset = self._prepare_dataset(features)
         return mapping, dataset
 
-    def _prepare_mapping(self, features):
+    def _prepare_mapping(self, features: dict) -> List[str]:
         return list(features.keys())
 
-    def _prepare_dataset(self, features):
+    def _prepare_dataset(self, features: dict) -> np.ndarray:
         dataset = list(features.values())
         dataset = np.asarray(dataset)
         return dataset

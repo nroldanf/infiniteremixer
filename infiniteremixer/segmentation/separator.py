@@ -1,25 +1,28 @@
-import os
 import math
+import os
+
 import numpy as np
-from infiniteremixer.utils.io import load, write_wav
 from spleeter.separator import Separator
+
+from infiniteremixer.utils.io import load, write_wav
 
 
 class SeparatorChunks:
-    '''Separate a track into 4 different sources and save the 
+    """Separate a track into 4 different sources and save the
     corresponding signals as audio files in different folders.
 
     The separator first divide in chunks that fit into RAM memory and Concatenate
     the results of prediction to an array.
-    '''
+    """
+
     def __init__(self, sample_rate, max_size):
         # Define the model
         self.separator = Separator("spleeter:4stems")
-        self.max_size = max_size # Maximum size of array (Equivalent 10_000_000 of 80M for a 2 channel audio).
+        self.max_size = max_size  # Maximum size of array (Equivalent 10_000_000 of 80M for a 2 channel audio).
         self.sample_rate = sample_rate
         self._audio_format = "wav"
         self.audio_array_length = None
-        
+
     def create_and_save_sources(self, dir, save_dir):
         for root, _, files in os.walk(dir):
             for file in files:
@@ -28,7 +31,7 @@ class SeparatorChunks:
 
     def _separate(self, file, root, save_dir):
         file_path = os.path.join(root, file)
-        # Load the audio 
+        # Load the audio
         y = load(file_path, self.sample_rate, False)
         self.audio_array_length = y.shape[1]
         # Separate the audio
@@ -96,11 +99,11 @@ class SeparatorChunks:
         # Concatenate
         other = np.column_stack(other)
         drums = np.column_stack(drums)
-    
+
         return other, drums
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sample_rate = 22050
     max_size = 6_000_000
 

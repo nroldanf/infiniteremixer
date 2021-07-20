@@ -1,12 +1,11 @@
 import argparse
 
-from infiniteremixer.utils.io import load_from_pickle, write_wav
 from infiniteremixer.remix.audiochunkmerger import AudioChunkMerger
-from infiniteremixer.remix.featureretriever import FeatureRetriever
-from infiniteremixer.search.nnsearch import NNSearch
 from infiniteremixer.remix.beatselector import BeatSelector
+from infiniteremixer.remix.featureretriever import FeatureRetriever
 from infiniteremixer.remix.remixer import Remixer
-
+from infiniteremixer.search.nnsearch import NNSearch
+from infiniteremixer.utils.io import load_from_pickle, write_wav
 
 # change these paths to run the script with your data
 MAPPING_PATH = "/app/results/dataset/mapping.pkl"
@@ -14,15 +13,15 @@ FEATURES_PATH = "/app/results/dataset/dataset.pkl"
 NEAREST_NEIGHBOUR_PATH = "/app/results/dataset/nearestneighbour.pkl"
 SAMPLE_RATE = 22050
 
+
 def generate_remix():
     parser = argparse.ArgumentParser()
-    parser.add_argument("jump_rate",
-                        help="rate at which you'd like to see remix jumps. "
-                             "Must be between 0 and 1")
-    parser.add_argument("number_of_beats",
-                        help="number of beats for generated remix")
-    parser.add_argument("save_path",
-                        help="path where to save generated remix")
+    parser.add_argument(
+        "jump_rate",
+        help="rate at which you'd like to see remix jumps. " "Must be between 0 and 1",
+    )
+    parser.add_argument("number_of_beats", help="number of beats for generated remix")
+    parser.add_argument("save_path", help="path where to save generated remix")
     args = parser.parse_args()
 
     jump_rate = float(args.jump_rate)
