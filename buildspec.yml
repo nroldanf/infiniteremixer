@@ -6,6 +6,9 @@ env:
     REPOSITORY_URI: 'provided-by-server-environment'
 
 phases:
+  install:
+    runtime-versions:
+      python: 3.8
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
