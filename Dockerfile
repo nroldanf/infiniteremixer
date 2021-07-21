@@ -12,5 +12,5 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 # Copy the code inside app folder
 COPY . /app
-
+# Something
 CMD ["python"]
