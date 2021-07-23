@@ -22,10 +22,10 @@ class DatasetPipeline:
         self.batch_extractor = None
         self.multi_track_batch_aggregator = None
         self.feature_merger = None
-        self.global_tempo_extractor = None
+        # self.global_tempo_extractor = None
         self.data_preparer = None
 
-    def process(self, dir: str, save_dir: str, tempo_dir: str) -> None:
+    def process(self, dir: str, save_dir: str) -> None:
         """Generate embeddings for all audio files in a directory and
         store relative array dataset and mappings.
 
@@ -34,37 +34,23 @@ class DatasetPipeline:
             dataset
         """
         tracks_features = self.batch_extractor.extract(dir)
-        # print(tracks_features)
-        print("Extracted features")
-
-        print()
 
         tracks_aggregations = self.multi_track_batch_aggregator.aggregate(
             tracks_features
         )
-        # print(tracks_aggregations)
-        print("Performed statistical aggregation of features")
-
-        print()
 
         tracks_merged_features = self.feature_merger.merge(tracks_aggregations)
-        # print(tracks_merged_features) # dict (key: np.array 1 x n_features)
-        print("Merged multiple features")
 
         # track_merged_features = self.global_tempo_extractor.concatenate()
 
         mapping, dataset = self.data_preparer.prepare_mapping_and_dataset(
             tracks_merged_features
         )
-        print("Mapping")
-        print(mapping)
 
-        song_name = [self._get_filename(path) for path in mapping][0]
+        # song_name = [self._get_filename(path) for path in mapping][0]
+        # tempo = self.global_tempo_extractor.extract(tempo_dir, song_name)
+        # print("TEMPO ", tempo)
 
-        tempo = self.global_tempo_extractor.extract(tempo_dir, song_name)
-        print("TEMPO ", tempo)
-
-        print("Prepared mapping and dataset")
         mapping_path = self._save_data(save_dir, mapping, "mapping")
         print(f"Saved mapping to {mapping_path}")
         dataset_path = self._save_data(save_dir, dataset, "dataset")

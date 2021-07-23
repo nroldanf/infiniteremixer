@@ -19,7 +19,7 @@ def segment():
     parser.add_argument(
         "save_dir", help="directory where to save generated audio files " "for beats"
     )
-    parser.add_argument("save_data_dir", help="")
+    # parser.add_argument("save_data_dir", help="")
     parser.add_argument(
         "-r",
         "--sample_rate",
@@ -30,5 +30,7 @@ def segment():
     args = parser.parse_args()
     segment_extractor = SegmentExtractor(args.sample_rate)
     segment_extractor.create_and_save_segments(
-        args.dir, args.save_dir, args.save_data_dir
+        args.dir,
+        args.save_dir,
+        # args.save_data_dir
     )

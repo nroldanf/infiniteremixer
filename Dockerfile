@@ -1,4 +1,11 @@
 FROM python:3.8-slim
+# System dependencies for audio handling (for librosa)
+# Remove apt cache after installing. lighter image
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends build-essential gcc \
+                                        libsndfile1 \
+                                        ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 # Set working directory
 WORKDIR /app
 # Set virtual environment with venv
@@ -8,9 +15,6 @@ RUN python3 -m venv $VIRTUAL_ENV \
     && pip install --upgrade pip \
     && pip install --upgrade setuptools wheel
 # Install requirements
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-# Copy the code inside app folder
 COPY . /app
-# Something more
-CMD ["python"]
+RUN pip install -r requirements.txt --no-cache-dir
+CMD ["bash"]

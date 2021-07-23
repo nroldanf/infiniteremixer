@@ -9,7 +9,8 @@ from infiniteremixer.data.datapreparer import DataPreparer
 from infiniteremixer.data.datasetpipeline import DatasetPipeline
 from infiniteremixer.data.extraction.batchextractor import BatchExtractor
 from infiniteremixer.data.extraction.chromogramextractor import ChromogramExtractor
-from infiniteremixer.data.extraction.globaltempoextractor import TempoExtractor
+
+# from infiniteremixer.data.extraction.globaltempoextractor import TempoExtractor
 from infiniteremixer.data.extraction.mfccextractor import MFCCExtractor
 from infiniteremixer.data.featuremerger import FeatureMerger
 
@@ -31,11 +32,15 @@ def create_dataset() -> None:
     parser.add_argument(
         "save_dir", help="directory where to store generated dataset and " "mapping"
     )
-    parser.add_argument("tempo_dir")
+    # parser.add_argument("tempo_dir")
 
     args = parser.parse_args()
     data_pipeline = _create_data_pipeline()
-    data_pipeline.process(args.dir, args.save_dir, args.tempo_dir)
+    data_pipeline.process(
+        args.dir,
+        args.save_dir,
+        # args.tempo_dir
+    )
 
 
 def _create_data_pipeline() -> DatasetPipeline:
@@ -50,7 +55,7 @@ def _create_data_pipeline() -> DatasetPipeline:
     mfcc_extractor = MFCCExtractor()
     batch_extractor.add_extractor(mfcc_extractor)
 
-    tempo_extractor = TempoExtractor()
+    # tempo_extractor = TempoExtractor()
 
     batch_aggregator = FlatBatchAggregator()
     mean_aggregator = MeanAggregator(1)
@@ -66,7 +71,7 @@ def _create_data_pipeline() -> DatasetPipeline:
     dataset_pipeline.batch_extractor = batch_extractor
     dataset_pipeline.multi_track_batch_aggregator = mtba
     dataset_pipeline.feature_merger = feature_merger
-    dataset_pipeline.global_tempo_extractor = tempo_extractor
+    # dataset_pipeline.global_tempo_extractor = tempo_extractor
     dataset_pipeline.data_preparer = data_preparer
 
     return dataset_pipeline

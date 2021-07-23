@@ -20,7 +20,7 @@ setuptools.setup(
     install_requires=required,
     entry_points={
         "console_scripts": [
-            "separate = infiniteremixer.segmentation.separate:separate",
+            # "separate = infiniteremixer.segmentation.separate:separate",
             "segment = infiniteremixer.segmentation.segment:segment",
             "create_dataset = infiniteremixer.data.createdataset:create_dataset",
             "fit_nearest_neighbours = infiniteremixer.search.fitnearestneighbours:fit_nearest_neighbours",

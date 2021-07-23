@@ -10,7 +10,7 @@ from infiniteremixer.utils.io import load_from_pickle, write_wav
 # change these paths to run the script with your data
 MAPPING_PATH = "/app/results/dataset/mapping.pkl"
 FEATURES_PATH = "/app/results/dataset/dataset.pkl"
-NEAREST_NEIGHBOUR_PATH = "/app/results/dataset/nearestneighbour.pkl"
+NEAREST_NEIGHBOUR_PATH = "/app/results/model/model.pkl"
 SAMPLE_RATE = 22050
 
 
