@@ -1,6 +1,9 @@
 .direnv
 .venv
 venv
+!tests
+!pyproject.toml
+!poetry.lock
 *.egg-info
 */.mypy_cache
 */__pycache__

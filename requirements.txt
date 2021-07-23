@@ -1,5 +1,0 @@
-librosa==0.8.0
-# spleeter==2.2.2
-pre-commit==2.13.0
-pytest
-scikit-learn==0.24.2

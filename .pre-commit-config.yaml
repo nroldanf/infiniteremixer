@@ -29,6 +29,8 @@ repos:
     rev: v4.0.1
     hooks:
       - id: check-json
+      - id: check-toml
+      - id: check-yaml
       - id: detect-private-key
       - id: forbid-new-submodules
       - id: requirements-txt-fixer
