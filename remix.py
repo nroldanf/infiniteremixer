@@ -29,7 +29,7 @@ os.environ["SPOTIPY_CLIENT_SECRET"] = "59ac0311c2cb463bb035c67258aa4ac1"
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
 
 # AWS CONFIG
-boto_session = boto3.session.Session(profile_name="nicolas-cdk")
+boto_session = boto3.session.Session(profile_name="mfa")
 sqs = boto_session.client("sqs")
 # THIS WILL BE CHANGED BY CLOOUDFORMATION OUTPUT SQS URL
 QUEUE_URL = "https://sqs.us-east-1.amazonaws.com/315217542954/testQueue"

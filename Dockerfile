@@ -38,4 +38,4 @@ RUN poetry config virtualenvs.create false \
 
 # Install requirements
 COPY . /app
-CMD ["bash"]
+# CMD ["bash"]
