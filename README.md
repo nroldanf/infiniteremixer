@@ -2,23 +2,10 @@
 Infinite Remixer is a Python application that creates remixes, patching 
 together multiple songs.
 
-
-## Installation
-To install the package, move to the root of the repo and type in the console:
-
-`$ pip install .`
-
-If you plan to develop the package further, install the package in editable 
-mode also installing the packages necessary to run unittests: 
-
-`$ pip install -e .[test]`
-
-
 ## Testing
 To run unittests, issue the following command from the root of the repo:
 
 `$ pytest`
-
 
 ## Package structure 
 The package is divided into 4 sub-packages:
@@ -82,19 +69,56 @@ In order to load the necessary artifacts for running the remix, you'll have
 to change the paths to your artifacts directly in the top part of the 
 `remix/generateremix.py` script.
 
-## Dependencies
-Infinite Remixer uses the packages below to extract audio features and for 
-nearest neighbour search:
+## Set-up
 
-- librosa
-- scikit-learn
+### poetry
 
-## YouTube video
-Learn more about Infinite Remixer in this project presentation video on The 
-Sound of AI YouTube channel.
+Install poetry. Poetry is a package management depency tool for Python. Poetry allow you to separate your development dependencies so they are not package inside your production environment.
 
+### pre-commit and git
 
+This project uses pre-commit hooks for code standardization and styling, among other tasks such as checking for heavy files, key pairs, credential files, etc.
 
+To make a new commit, run git inside poetry environment:
 
+```bash
+poetry shell
+```
 
+Then:
 
+```bash
+SKIP=mypy git commit -m "message" 
+```
+
+### Docker image
+
+To build a docker image for development testing inside your local machine pass the value __dev__ to building argument named __SOFTWARE_ENV__ to the docker build command with --build-arg flag as follows:
+
+```bash
+docker build --build-arg SOFTWARE_ENV=dev -t image_name .
+```
+
+To build a docker for prodution environment use __prod__ value instead.
+
+```bash
+docker build --build-arg SOFTWARE_ENV=prod -t image_name .
+```
+
+To run a docker container on interactive mode based on this image:
+
+```bash
+docker run --rm -it -v $(pwd):/app ~/.aws:/root/.aws image_name bash
+```
+
+### ECR (Elastic container registry)
+
+In order to push a docker image into an existent ECR registry, follow the next steps.
+
+Login to ECR registry using profile credentials inside your local machine.
+
+```bash
+aws --profile mfa ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ecr_registry_uri
+```
+
+Then follow this guide from AWS documentation: https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html
